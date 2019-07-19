@@ -2,12 +2,14 @@
 
 <p>
   <strong>Drug:</strong>
-  <%= @side_effect.drug %>
+  <%= @side_effect.drug.name %>
+  (<%= @side_effect.drug.id %>)
 </p>
 
 <p>
   <strong>Symptom:</strong>
-  <%= @side_effect.symptom %>
+  <%= @side_effect.symptom.name %>
+  (<%= @side_effect.symptom.id %>)
 </p>
 
 <%= link_to 'Edit', edit_side_effect_path(@side_effect) %> |
