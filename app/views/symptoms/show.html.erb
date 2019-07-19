@@ -8,6 +8,15 @@
   <strong>Name:</strong>
   <%= @symptom.name %>
 </p>
+<BR/>
+<p>
+<strong>Drugs that have these symptoms as side effects:</strong>
+  <P>
+    <% SideEffect.where(symptom_id: @symptom.id).find_each do |side_effect| %>
+      <%= side_effect.drug.name %><BR/>
+    <% end %>
+  </P>
+</P>
 
 <%= link_to 'Edit', edit_symptom_path(@symptom) %> |
 <%= link_to 'Back', symptoms_path %>
