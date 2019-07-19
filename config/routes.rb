@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'sevs/main'
   resources :side_effects
   resources :symptoms
   resources :drugs
