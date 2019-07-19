@@ -4,6 +4,7 @@ class SideEffectsController < ApplicationController
   # GET /side_effects
   # GET /side_effects.json
   def index
+    @title = "Side Effects index"
     @side_effects = SideEffect.all
   end
 

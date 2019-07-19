@@ -4,6 +4,7 @@ class SymptomsController < ApplicationController
   # GET /symptoms
   # GET /symptoms.json
   def index
+    @title = "Symptoms index"
     @symptoms = Symptom.all
   end
 

@@ -4,6 +4,7 @@ class DrugsController < ApplicationController
   # GET /drugs
   # GET /drugs.json
   def index
+    @title = "Drugs index"
     @drugs = Drug.all
   end
 
