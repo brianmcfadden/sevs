@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'sevs', to: 'sevs#main'
   get 'sevs/main', to: 'sevs#main'
   root 'sevs#main'
   resources :side_effects
