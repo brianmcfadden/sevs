@@ -1,2 +1,71 @@
-<h1>Sevs#main</h1>
-<p>Find me in app/views/sevs/main.html.erb</p>
+<head>
+  <script src="scripts.js">
+  </script>
+  <link href="styles.css" rel="stylesheet"/>
+</head>
+
+<br>
+
+<h1 style="text-align: center;">
+SEVS
+</h1>
+<h2 style="text-align: center;">
+Side Effects Vs. Symptoms
+</h2>
+<h4 style="text-align: center;">
+  This text explains what's going on below
+</h4>
+<table border style="text-align: center; width:100%">
+  <tr>
+    <td>Choose Symptoms from the drop-down below and add them to the list
+    </td>
+    <td>Choose Meds from the drop-down below and add them to the list
+    </td>
+  </tr>
+
+<!-- ------------------------------------------------- -->
+<script>
+  function drug_list_add(selectedItem) {
+    var option = document.createElement("option");
+    option.id = selectedItem.value; // setting ID so we can use namedItem
+    option.value = selectedItem.value;
+    option.text = selectedItem.text;
+
+    var list = document.getElementById('drug-list');
+    if (list.namedItem(option.value) == null) {
+      list.add(option);
+    }
+  }
+  function drug_list_remove(selectedIndex) {
+    document.getElementById("drug-list").remove(selectedIndex);
+  }
+</script>
+
+  <tr>
+    <td>
+      <%= select_tag "symptom-select",
+          options_from_collection_for_select(Symptom.all, "id", "name"),
+          :onchange => 'symptom_change_handler()'  %>
+    </td>
+    <td>
+      <%= select_tag "drug-select",
+          options_from_collection_for_select(Drug.all, "id", "name"),
+          :onchange => 'drug_change_handler()' %>
+      <%= button_tag 'Add drug to list',
+          :onclick => 'drug_list_add( document.getElementById("drug-select").options[document.getElementById("drug-select").selectedIndex] )' %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <!-- under symptom here .. ignore -->
+    </td>
+    <td>
+      <%= select_tag "drug-list", [], :size => 5, :style => "width: 150px;", :ondblclick => 'drug_list_remove(document.getElementById("drug-list").selectedIndex)' %>
+    </td>
+  </tr>
+</table>
+
+<div style="text-align: center">
+  <%= button_tag 'Generate SEVS Report',
+      :onclick => 'generate_report()', :style => "text-align: center;" %>
+</div>
