@@ -10,7 +10,7 @@
 </p>
 <BR/>
 <P>
-Side effects:
+<strong>Side effects:</strong>
   <P>
     <% SideEffect.where(drug_id: @drug.id).find_each do |side_effect| %>
       <%= side_effect.symptom.name %><BR/>
