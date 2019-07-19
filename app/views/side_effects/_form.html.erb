@@ -13,12 +13,16 @@
 
   <div class="field">
     <%= form.label :drug_id %>
-    <%= form.text_field :drug_id %>
+    <% # form.text_field :drug_id %>
+    <%= select(:side_effect, :drug_id, 
+      options_from_collection_for_select(Drug.all, "id", "name")) %>
   </div>
 
   <div class="field">
     <%= form.label :symptom_id %>
-    <%= form.text_field :symptom_id %>
+    <% # form.text_field :symptom_id %>
+    <%= select(:side_effect, :symptom_id,
+      options_from_collection_for_select(Symptom.all, "id", "name")) %>
   </div>
 
   <div class="actions">
