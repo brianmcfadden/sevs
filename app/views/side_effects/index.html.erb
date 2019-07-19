@@ -14,8 +14,8 @@
   <tbody>
     <% @side_effects.each do |side_effect| %>
       <tr>
-        <td><%= side_effect.drug %></td>
-        <td><%= side_effect.symptom %></td>
+        <td><%= side_effect.drug.name %></td>
+        <td><%= side_effect.symptom.name %></td>
         <td><%= link_to 'Show', side_effect %></td>
         <td><%= link_to 'Edit', edit_side_effect_path(side_effect) %></td>
         <td><%= link_to 'Destroy', side_effect, method: :delete, data: { confirm: 'Are you sure?' } %></td>
