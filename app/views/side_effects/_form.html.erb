@@ -1,0 +1,27 @@
+<%= form_with(model: side_effect, local: true) do |form| %>
+  <% if side_effect.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(side_effect.errors.count, "error") %> prohibited this side_effect from being saved:</h2>
+
+      <ul>
+      <% side_effect.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :drug_id %>
+    <%= form.text_field :drug_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :symptom_id %>
+    <%= form.text_field :symptom_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
