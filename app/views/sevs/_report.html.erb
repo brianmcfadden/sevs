@@ -8,7 +8,6 @@ function generate_report() {
   var drug_list = document.getElementById("drug-list");
   var symptom_select = document.getElementById("symptom-select");
   var symptom = symptom_select.options[symptom_select.selectedIndex];
-  alert(symptom.value.toString() + symptom.text);
   /*
 go through side effects,
 if the symptom matches,
@@ -16,12 +15,16 @@ and the drug is in the drug-list,
 then output the drug
   */
   side_effects.forEach(function(item,index) {
-    var drugId = item[1];
-    var symptomId = item[2];
-    if (symptom.value == symptomId) {
-      alert('matched ' + symptom.value.toString() + " " + symptomId.toString());
-    } else {
-      alert('NOT matched ' + symptom.value.toString() + " " + symptomId.toString());
+    var sideEffectDrugId = item[1];
+    var sideEffectSymptomId = item[2];
+    if (symptom.value == sideEffectSymptomId) {
+      var i;
+      for(i=0; i<drug_list.length; i++) {
+        var drugId = drug_list.options[i].value;
+        if (drugId == sideEffectDrugId) {
+          console.log('matched ' + symptom.value.toString() + " with " + drug_list.options[i].text );
+        }
+      }
     }
   });
 }
