@@ -1,0 +1,84 @@
+<h1>SEvS Report</h1>
+
+<P>
+  <h3>Produced for: Bob Smith</h3>
+  <h3 style="text-align:right">Production date: 01/01/2021</h3>
+  <h3 style="text-align:right">Production time: 01:02:30 EST</h3>
+</P>
+
+<br>
+
+<h3>
+  <p>
+    <div style="text-ident: 2.0em;">
+      Input Data
+    </div>
+  </P>
+</h3>
+
+<h3>
+  <P>
+    Symptom:
+  </P>
+</h3>
+
+<P>
+  <div style="text-indent: 2.0em">
+    <%= @symptom.name %>
+  </div>
+</P>
+
+<h3>
+  <P>
+    Drug List:
+  </P>
+</h3>
+<P>
+  <div style="text-indent: 2.0em">list not ready</div>
+</P>
+
+<br>
+
+<h3>
+  <p>
+    <div style="text-ident: 2.0em;">
+      Results
+    </div>
+  </P>
+</h3>
+
+<h3>
+  <p> Drugs that have <%= @symptom.name %> as a side effect: </p>
+</h3>
+
+<P>
+  <% @drugs.each do |d| %>
+    <div style="text-indent: 2.0em">
+    <%= d.name %>
+    </div>
+  <% end %>
+</P>
+
+<% @drugs.each do |d| %>
+<p>
+<%= d.name %> is a drug made by [company name] which helps with [...].
+</P>
+<% end %>
+
+<h3>
+  <P>
+    Common side effects
+  </P>
+</h3>
+
+<P>
+The most common side effects given the drug list:
+  <ol>
+    <li>list not ready</li>
+  </ol>
+</P>
+
+<P>
+  Disclaimer:  I disclaim all things.
+</P>
+

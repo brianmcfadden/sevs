@@ -7,7 +7,37 @@ class SevsController < ApplicationController
 
   def create
     respond_to do |format|
-      format.html { redirect_to("/404.html") }
-    end
-  end
+      Rails.logger.level = 0
+      # params.each do |key,value|
+        # Rails.logger.warn "Param #{key}: #{value}"
+      # end
+
+      @symptom = Symptom.find(params[:symptom][:id])
+
+      # for each drug, go through side effects for that drug
+      # and match the symptom - add to side effects list
+      # and pass that on to the view
+      @drugs = []
+      @sideEffects = []
+      @drugList = params[:drugList]
+      if @drugList != nil
+        @drugList.each do |drugId|
+          Rails.logger.warn "Checking drug #{drugId}"
+          SideEffect.where(drug_id: drugId).each do |se|
+            if se.symptom_id == @symptom.id
+              Rails.logger.warn "Matched #{@symptom.name}"
+              @drugs.push(Drug.find(drugId))
+              @sideEffects.push(@symptom.name)
+            end # if symptom_id
+          end # each SideEffect
+        end # each drugList
+        format.html {
+          render "generate_report"
+        }
+      else # if @drugList == nil
+        format.html { redirect_to("/404.html") }
+      end # if @drugList
+      format.all  { redirect_to("/404.html") }
+    end # respond_to
+  end # def create
 end
