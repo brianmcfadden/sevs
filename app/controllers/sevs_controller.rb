@@ -1,5 +1,5 @@
 class SevsController < ApplicationController
-  def main
+  def index
     @side_effects = SideEffect.all
     @drugs = Drug.all
     @symptoms = Symptom.all

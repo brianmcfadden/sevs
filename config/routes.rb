@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
-  get 'sevs', to: 'sevs#main'
-  get 'sevs/main', to: 'sevs#main'
-  root 'sevs#main'
+  root 'sevs#index'
+  resources :sevs
   resources :side_effects
   resources :symptoms
   resources :drugs
