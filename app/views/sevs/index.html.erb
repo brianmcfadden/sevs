@@ -1,3 +1,6 @@
+<%  @sevs = Sev.new %>
+<%= form_for @sevs do |f| %>
+
 <head>
   <script src="scripts.js">
   </script>
@@ -48,6 +51,7 @@
           options_from_collection_for_select(Drug.all, "id", "name"),
           :onchange => 'drug_change_handler()' %>
       <%= button_tag 'Add drug to list',
+          type: 'button',
           :onclick => 'drug_list_add( document.getElementById("drug-select").options[document.getElementById("drug-select").selectedIndex] )' %>
     </td>
   </tr>
@@ -56,12 +60,16 @@
       <!-- under symptom here .. ignore -->
     </td>
     <td>
-      <%= select_tag "drug-list", [], :size => 5, :style => "width: 150px;", :ondblclick => 'drug_list_remove(document.getElementById("drug-list").selectedIndex)' %>
+      <%= select_tag "drug-list", [],
+          :size => 5, :style => "width: 150px;",
+          :ondblclick => 'drug_list_remove(document.getElementById("drug-list").selectedIndex)' %>
     </td>
   </tr>
 </table>
 
 <div style="text-align: center">
-  <%= button_tag 'Generate SEVS Report',
-      :onclick => 'generate_report()', :style => "text-align: center;" %>
+    <%= f.submit "Generate Report" %>
 </div>
+
+<% end %>
+
