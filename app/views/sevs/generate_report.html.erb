@@ -2,8 +2,8 @@
 
 <P>
   <h3>Produced for: Bob Smith</h3>
-  <h3 style="text-align:right">Production date: 01/01/2021</h3>
-  <h3 style="text-align:right">Production time: 01:02:30 EST</h3>
+  <h3 style="text-align:right">Production date: <%= DateTime.now.strftime("%m/%d/%Y") %> </h3>
+  <h3 style="text-align:right">Production time: <%= DateTime.now.strftime("%I:%M %p") %> EST</h3>
 </P>
 
 <br>
