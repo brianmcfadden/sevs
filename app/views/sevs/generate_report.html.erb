@@ -30,11 +30,13 @@
 
 <h3>
   <P>
-    Drug List:
+    Prescription List:
   </P>
 </h3>
 <P>
-  <div style="text-indent: 2.0em">list not ready</div>
+  <% @drugs.each do |d| %>
+  <div style="text-indent: 2.0em"><%= d.name %></div>
+  <% end %>
 </P>
 
 <br>
@@ -52,16 +54,16 @@
 </h3>
 
 <P>
-  <% @drugs.each do |d| %>
+  <% @sideEffects.each do |s| %>
     <div style="text-indent: 2.0em">
-    <%= d.name %>
+    <%= s.drug.name %>
     </div>
   <% end %>
 </P>
 
-<% @drugs.each do |d| %>
+<% @sideEffects.each do |s| %>
 <p>
-<%= d.name %> is a drug made by [company name] which helps with [...].
+<%= s.drug.name %> is a drug made by [company name] which helps with [...].
 </P>
 <% end %>
 

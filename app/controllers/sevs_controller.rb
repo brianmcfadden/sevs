@@ -22,12 +22,14 @@ class SevsController < ApplicationController
       @drugList = params[:drugList]
       if @drugList != nil
         @drugList.each do |drugId|
-          Rails.logger.warn "Checking drug #{drugId}"
-          SideEffect.where(drug_id: drugId).each do |se|
+          @drug = Drug.find(drugId)
+          Rails.logger.warn "Checking drug #{@drug.name}"
+          @drugs.push(@drug)
+          @sideEffectsList = SideEffect.where(drug_id: drugId)
+          @sideEffectsList.each do |se|
             if se.symptom_id == @symptom.id
-              Rails.logger.warn "Matched #{@symptom.name}"
-              @drugs.push(Drug.find(drugId))
-              @sideEffects.push(@symptom.name)
+              Rails.logger.warn "Matched #{@symptom.name} with #{@drug.name}"
+              @sideEffects.push(se)
             end # if symptom_id
           end # each SideEffect
         end # each drugList
