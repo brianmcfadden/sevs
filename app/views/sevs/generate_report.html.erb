@@ -76,7 +76,14 @@
 <P>
 The most common side effects given the drug list:
   <ol>
-    <li>list not ready</li>
+    <% @cses = @commonSideEffects.sort_by { |cse| -cse[:count] }.keep_if { |cse| cse[:count] > 1 } %>
+    <% @cses.each do |cse| %>
+      <li>
+        <div style="text-indent: 2.0em">
+        [ <%= cse[:count] %> ] : <%= cse[:side].symptom.name %>
+        </div>
+      </li>
+    <% end %>
   </ol>
 </P>
 
