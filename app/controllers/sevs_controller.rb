@@ -8,9 +8,6 @@ class SevsController < ApplicationController
   def create
     respond_to do |format|
       Rails.logger.level = 0
-      # params.each do |key,value|
-        # Rails.logger.warn "Param #{key}: #{value}"
-      # end
 
       @symptom = Symptom.find(params[:symptom][:id])
 
@@ -24,23 +21,18 @@ class SevsController < ApplicationController
       if @drugList != nil
         @drugList.each do |drugId|
           @drug = Drug.find(drugId)
-          Rails.logger.warn "Checking drug #{@drug.name}"
           @drugs.push(@drug)
           @sideEffectsList = SideEffect.where(drug_id: drugId)
           @sideEffectsList.each do |se|
             #
-            Rails.logger.warn "#{@commonSideEffects.inspect}"
             @cse = @commonSideEffects.find { |cse| cse[:side].symptom_id == se.symptom_id }
             if @cse != nil
-              Rails.logger.warn "find received: #{se.symptom.name} - #{@cse}"
               @cse[:count] += 1
             else
-              Rails.logger.warn "find received: #{se.symptom.name} - cse == nil"
               @commonSideEffects.push( { :side  => se, :count => 1} )
             end
             #
             if se.symptom_id == @symptom.id
-              Rails.logger.warn "Matched #{@symptom.name} with #{@drug.name}"
               @sideEffects.push(se)
             end # if symptom_id
           end # each SideEffect

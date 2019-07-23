@@ -18,8 +18,6 @@
 <script>
   function formsubmit() {
     drug_list_select_all();
-    // var sevsjson = document.getElementById('sevsjson');
-    // var list = document.getElementById('drugList');
   }
   function drug_list_add(selectedItem) {
     var option = document.createElement("option");
@@ -45,9 +43,6 @@
 
   <tr>
     <td>
-      <%# select_tag "symptom[id]",
-          options_from_collection_for_select(Symptom.all, "id", "name"),
-          :onchange => 'symptom_change_handler()'  %>
       <%= select "symptom", "id", Symptom.all.collect {|p| [ p.name, p.id ] } %>
     </td>
     <td>
@@ -71,44 +66,8 @@
   </tr>
 </table>
 
-<!-- input type="hidden" id="sevsjson"
-       name="sevsjson" value="" / -->
-
 <div style="text-align: center">
     <%= f.submit "Generate Report" %>
 </div>
 
 <% end %>
-
-
-<!-- Generate the report -->
-<!-- script>
-var drugs=<%# raw @drugs.pluck(:id, :name) %>;
-var symptoms=<%# raw @symptoms.pluck(:id, :name) %>;
-var side_effects = <%# raw @side_effects.pluck(:id, :drug_id, :symptom_id) %>
-
-function generate_report() {
-  var drug_list = document.getElementById("drugList");
-  var symptom_select = document.getElementById("symptom-select");
-  var symptom = symptom_select.options[symptom_select.selectedIndex];
-  /*
-go through side effects,
-if the symptom matches,
-and the drug is in the drugList,
-then output the drug
-  */
-  side_effects.forEach(function(item,index) {
-    var sideEffectDrugId = item[1];
-    var sideEffectSymptomId = item[2];
-    if (symptom.value == sideEffectSymptomId) {
-      var i;
-      for(i=0; i<drug_list.length; i++) {
-        var drugId = drug_list.options[i].value;
-        if (drugId == sideEffectDrugId) {
-          console.log('matched ' + symptom.value.toString() + " with " + drug_list.options[i].text );
-        }
-      }
-    }
-  });
-}
-</script -->
