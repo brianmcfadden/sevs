@@ -59,7 +59,8 @@
       <!-- under symptom here .. ignore -->
     </td>
     <td>
-      <%= select_tag "drugList", "",
+      <%= select_tag "drugList",
+          options_from_collection_for_select(Drug.all, "id", "name"),
           :size => 5, :style => "width: 150px;", multiple: true,
           :ondblclick => 'drug_list_remove(document.getElementById("drugList").selectedIndex)' %>
     </td>
@@ -67,7 +68,7 @@
 </table>
 
 <div style="text-align: center">
-    <%= f.submit "Generate Report" %>
+    <%= f.submit "Generate Report", :autofocus => true %>
 </div>
 
 <% end %>
