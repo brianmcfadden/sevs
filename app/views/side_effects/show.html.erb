@@ -14,3 +14,10 @@
 
 <%= link_to 'Edit', edit_side_effect_path(@side_effect) %> |
 <%= link_to 'Back', side_effects_path, autofocus: true %>
+
+<script>
+const autoFocusedElements = document.querySelectorAll('a[autofocus]');
+if (autoFocusedElements.length) {
+  autoFocusedElements[0].focus();
+}
+</script>

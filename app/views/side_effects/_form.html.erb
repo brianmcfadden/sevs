@@ -1,3 +1,14 @@
+<script>
+function nextOnEnter(event) {
+  return event.charCode !== 13 ||
+    document.getElementById("side_effect_symptom_id").focus();
+}
+function submitOnEnter(event) {
+  return event.charCode !== 13 ||
+    document.getElementsByTagName("form")[0].submit();
+}
+</script>
+
 <%= form_with(model: side_effect, local: true) do |form| %>
   <% if side_effect.errors.any? %>
     <div id="error_explanation">
@@ -13,16 +24,16 @@
 
   <div class="field">
     <%= form.label :drug_id %>
-    <% # form.text_field :drug_id %>
     <%= select(:side_effect, :drug_id, 
-      options_from_collection_for_select(Drug.all, "id", "name")) %>
+      options_from_collection_for_select(Drug.all, "id", "name"),
+      {}, { :onkeypress => "nextOnEnter(event)" , autofocus: true } ) %>
   </div>
 
   <div class="field">
     <%= form.label :symptom_id %>
-    <% # form.text_field :symptom_id %>
     <%= select(:side_effect, :symptom_id,
-      options_from_collection_for_select(Symptom.all, "id", "name")) %>
+      options_from_collection_for_select(Symptom.all, "id", "name"),
+      {}, { :onkeypress => "submitOnEnter(event)" } ) %>
   </div>
 
   <div class="actions">

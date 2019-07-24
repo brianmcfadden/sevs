@@ -20,3 +20,10 @@
 
 <%= link_to 'Edit', edit_drug_path(@drug) %> |
 <%= link_to 'Back', drugs_path, autofocus: true %>
+
+<script>
+const autoFocusedElements = document.querySelectorAll('a[autofocus]');
+if (autoFocusedElements.length) {
+  autoFocusedElements[0].focus();
+}
+</script>
