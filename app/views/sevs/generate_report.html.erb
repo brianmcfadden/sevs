@@ -14,6 +14,8 @@ function printReport() {
 </script>
 <div style="text-align:left">
   <p>
+  <%= button_tag 'Back', type: 'button',
+      :onclick => 'window.location.href="/sevs"', autofocus: true %>
   <%= button_tag 'Print Report',
       type: 'button',
       :onclick => 'printReport()' %>
