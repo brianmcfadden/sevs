@@ -6,6 +6,7 @@ class SevsController < ApplicationController
   end
 
   def create
+    @title = "Report"
     respond_to do |format|
       Rails.logger.level = 0
 
