@@ -1,4 +1,30 @@
+<script>
+function printReport() {
+  var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+  mywindow.document.write('<html><head><title></title>');
+  mywindow.document.write('</head><body >');
+  mywindow.document.write(document.getElementById("divPrint").innerHTML);
+  mywindow.document.write('</body></html>');
+  mywindow.document.close();
+  mywindow.focus();
+  mywindow.print();
+  mywindow.close();
+  return true;
+}
+</script>
+<div style="text-align:left">
+  <p>
+  <%= button_tag 'Print Report',
+      type: 'button',
+      :onclick => 'printReport()' %>
+  </p>
+</div>
+
+<div id="divPrint">
+
+<div style="text-align:center">
 <h1>SEvS Report</h1>
+</div>
 
 <P>
   <h3>Produced for: Bob Smith</h3>
@@ -91,3 +117,4 @@ The most common side effects given the drug list:
   Disclaimer:  I disclaim all things.
 </P>
 
+</div>
