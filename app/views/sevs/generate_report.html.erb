@@ -1,4 +1,26 @@
 <script>
+function saveReport() {
+    var textToSave = '<html><head><title></title>'
+      + '</head><body >'
+      + document.getElementById("divPrint").innerHTML
+      + '</body></html>';
+    var textToSaveAsBlob = new Blob([textToSave], {type:"text/plain"});
+    var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
+    var fileNameToSaveAs = "SEvS-report.html";
+    var downloadLink = document.createElement("a");
+    downloadLink.download = fileNameToSaveAs;
+    downloadLink.innerHTML = "Download File";
+    downloadLink.href = textToSaveAsURL;
+    downloadLink.onclick = destroyClickedElement;
+    downloadLink.style.display = "none";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+}
+function destroyClickedElement(event)
+{
+    document.body.removeChild(event.target);
+}
+
 function printReport() {
   var mywindow = window.open('', 'PRINT', 'height=400,width=600');
   mywindow.document.write('<html><head><title></title>');
@@ -11,6 +33,7 @@ function printReport() {
   mywindow.close();
   return true;
 }
+
 </script>
 <div style="text-align:left">
   <p>
@@ -19,6 +42,10 @@ function printReport() {
   <%= button_tag 'Print Report',
       type: 'button',
       :onclick => 'printReport()' %>
+  <%= button_tag 'Save Report',
+      type: 'button',
+      :onclick => 'saveReport()' %>
+  </p>
   </p>
 </div>
 
