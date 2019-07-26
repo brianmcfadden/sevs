@@ -25,14 +25,14 @@ function submitOnEnter(event) {
   <div class="field">
     <%= form.label :drug_id %>
     <%= select(:side_effect, :drug_id, 
-      options_from_collection_for_select(Drug.all, "id", "name"),
+      options_from_collection_for_select(Drug.order(:name).all, "id", "name"),
       {}, { :onkeypress => "nextOnEnter(event)" , autofocus: true } ) %>
   </div>
 
   <div class="field">
     <%= form.label :symptom_id %>
     <%= select(:side_effect, :symptom_id,
-      options_from_collection_for_select(Symptom.all, "id", "name"),
+      options_from_collection_for_select(Symptom.order(:name).all, "id", "name"),
       {}, { :onkeypress => "submitOnEnter(event)" } ) %>
   </div>
 

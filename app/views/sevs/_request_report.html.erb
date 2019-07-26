@@ -59,11 +59,11 @@
 
   <tr>
     <td>
-      <%= select "symptom", "id", Symptom.all.collect {|p| [ p.name, p.id ] } %>
+      <%= select "symptom", "id", Symptom.order(:name).all.collect {|p| [ p.name, p.id ] } %>
     </td>
     <td>
       <%= select_tag "drug-select",
-          options_from_collection_for_select(Drug.all, "id", "name") %>
+          options_from_collection_for_select(Drug.order(:name).all, "id", "name") %>
       <%= button_tag 'Add drug to list',
           type: 'button',
           :onclick => 'drug_list_add( document.getElementById("drug-select").options[document.getElementById("drug-select").selectedIndex] )' %>
