@@ -4,9 +4,14 @@
   <strong>ID:</strong>
   <%= @drug.id %>
 </p>
+<BR/>
 <p>
   <strong>Name:</strong>
   <%= @drug.name %>
+</p>
+<p>
+  <strong>Classification:</strong>
+  <%= if @drug.classification then @drug.classification.name end %>
 </p>
 <BR/>
 <P>

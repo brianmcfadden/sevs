@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Classifications</h1>
+
+<p>
+<%= link_to 'New Classification', new_classification_path, autofocus: true %>
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @classifications.each do |classification| %>
+      <tr>
+        <td><%= classification.name %></td>
+        <td><%= link_to 'Show', classification %></td>
+        <td><%= link_to 'Edit', edit_classification_path(classification) %></td>
+        <td><%= link_to 'Destroy', classification, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

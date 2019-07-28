@@ -105,7 +105,7 @@ function printReport() {
 </h3>
 
 <h3>
-  <p> Drugs that have <%= @symptom.name %> as a side effect: </p>
+  <p>Drugs that have <%= @symptom.name %> as a side effect</p>
 </h3>
 
 <P>
@@ -118,7 +118,10 @@ function printReport() {
 
 <% @sideEffects.each do |s| %>
 <p>
-<%= s.drug.name %> is a drug made by [company name] which helps with [...].
+  <%= s.drug.name %> belongs to the
+  <B><I><%= s.drug.classification.name %></I></B>
+  class of drugs.
+  It is manufcatured by [company name], and helps with [...].
 </P>
 <% end %>
 

@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>ID:</strong>
+  <%= @classification.id %>
+</p>
+<br>
+
+<p>
+  <strong>Name:</strong>
+  <%= @classification.name %>
+</p>
+<p>
+<strong>Drugs in this class:</strong>
+  <P>
+    <%#SideEffect.where(symptom_id: @symptom.id).find_each do |side_effect| %>
+    <% Drug.where(classification_id: @classification.id).find_each do |drug| %>
+      <%= drug.name %><BR/>
+    <% end %>
+  </P>
+</P>
+
+<%= link_to 'Edit', edit_classification_path(@classification) %> |
+<%= link_to 'Back', classifications_path, autofocus: true %>
+
+<script>
+const autoFocusedElements = document.querySelectorAll('a[autofocus]');
+if (autoFocusedElements.length) {
+  autoFocusedElements[0].focus();
+}
+</script>
+

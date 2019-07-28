@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :classifications
   root 'sevs#index'
   resources :sevs
   resources :side_effects
