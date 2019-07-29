@@ -121,7 +121,7 @@ function printReport() {
   <%= s.drug.name %> belongs to the
   <B><I><%= s.drug.classification.name %></I></B>
   class of drugs.
-  It is manufcatured by [company name], and helps with [...].
+  It is manufcatured by <%= s.drug.manufacturer.name %>.
 </P>
 <% end %>
 

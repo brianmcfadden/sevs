@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @manufacturer.id %>
+</p>
+<br/>
+<p>
+  <strong>Name:</strong>
+  <%= @manufacturer.name %>
+</p>
+<BR/>
+<P>
+<strong>Drugs made by this manufacturer:</strong>
+  <P>
+    <% Drug.where(manufacturer_id: @manufacturer.id).find_each do |drug| %>
+      <%= drug.name %><BR/>
+    <% end %>
+  </P>
+</P>
+
+<%= link_to 'Edit', edit_manufacturer_path(@manufacturer) %> |
+<%= link_to 'Back', manufacturers_path, autofocus: true %>
+
+<script>
+const autoFocusedElements = document.querySelectorAll('a[autofocus]');
+if (autoFocusedElements.length) {
+  autoFocusedElements[0].focus();
+}
+</script>

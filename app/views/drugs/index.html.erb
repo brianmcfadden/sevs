@@ -18,6 +18,8 @@
     <% @drugs.each do |drug| %>
       <tr>
         <td><%= drug.name %></td>
+        <td><%= if drug.manufacturer then drug.manufacturer.name end %></td>
+        <td><%= if drug.classification then drug.classification.name end %></td>
         <td><%= link_to 'Show', drug %></td>
         <td><%= link_to 'Edit', edit_drug_path(drug) %></td>
         <td><%= link_to 'Destroy', drug, method: :delete, data: { confirm: 'Are you sure?' } %></td>
