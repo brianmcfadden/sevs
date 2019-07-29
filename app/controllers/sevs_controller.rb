@@ -38,6 +38,13 @@ class SevsController < ApplicationController
             end # if symptom_id
           end # each SideEffect
         end # each drugList
+        # top ten-ish common side effects
+        @commonSideEffects = @commonSideEffects.sort_by { |cse| -cse[:count] }
+        @commonSideEffects.keep_if { |c| c[:count] > 1 }
+        if @commonSideEffects.length >= 10  then
+          t = @commonSideEffects[10][:count]
+          @commonSideEffects.keep_if { |c| c[:count] >= t }
+        end
         format.html {
           render "generate_report"
         }
