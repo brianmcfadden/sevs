@@ -52,44 +52,37 @@ function printReport() {
 <div id="divPrint">
 
 <div style="text-align:center">
-<h1>SEvS Report</h1>
+<h1 style="float:left">SEvS Report</h1>
 </div>
 
 <P>
-  <h3>Produced for: Bob Smith</h3>
-  <h3><%= DateTime.now.strftime("%m/%d/%Y") %> </h3>
-  <h3><%= DateTime.now.strftime("%I:%M %p") %> EST</h3>
+  <BR>
+  <h4 style="text-align:right">Produced for: Bob Smith</h4>
+  <h4 style="text-align:right"><%= DateTime.now.strftime("%m/%d/%Y") %> 
+  <%= DateTime.now.strftime("%I:%M %p") %> EST</h4>
 </P>
-
-<br>
-
-<h3>
-  <p>
-    <div style="text-ident: 2.0em;">
-      Input Data
-    </div>
-  </P>
-</h3>
 
 <h3>
   <P>
-    Symptom:
+    List of Symptoms:
   </P>
 </h3>
 
 <P>
+  <% @symptoms.each do |s| %>
   <div style="text-indent: 2.0em">
-    <%= @symptom.name %>
+    <%= s.name %>
   </div>
+  <% end %>
 </P>
 
 <h3>
   <P>
-    Prescription List:
+    Prescriptions:
   </P>
 </h3>
 <P>
-  <% @drugs.each do |d| %>
+  <% @prescription.each do |d| %>
   <div style="text-indent: 2.0em"><%= d.name %></div>
   <% end %>
 </P>
@@ -104,36 +97,42 @@ function printReport() {
   </P>
 </h3>
 
-<h3>
-  <p>Drugs that have <%= @symptom.name %> as a side effect</p>
-</h3>
-
-<P>
-  <% @sideEffects.each do |s| %>
-    <div style="text-indent: 2.0em">
-    <%= s.drug.name %>
-    </div>
-  <% end %>
-</P>
-
-<% @sideEffects.each do |s| %>
-<p>
-  <%= s.drug.name %> belongs to the
-  <B><I><%= s.drug.classification.name %></I></B>
-  class of drugs.
-  It is manufcatured by <%= s.drug.manufacturer.name %>.
-</P>
-<% end %>
-
-<h3>
+<h4>
   <P>
-    Common side effects
+    <div style="text-indent: 10%">
+      Drugs that have the listed symptoms as side effects
+    </div>
   </P>
-</h3>
+</h4>
+
+<p>
+  <% @drugsWithSymptoms.each do |d| %>
+    <p>
+      <B><%= d[:drug].name %></B>
+      is manufactured by <%= d[:drug].manufacturer.name %>
+      and belongs to the
+      <I><%= d[:drug].classification.name %></I>
+      class of drugs.  The side effects include:
+      <% @drugsWithSymptoms.find_all { |dws| dws[:drug].id == d[:drug].id }.
+                            each do |dws| %>
+        <% dws[:symptoms].each do |symptom| %>
+          <%= symptom.name %>
+        <% end %>
+      <% end %>
+    </p>
+  <% end %>
+</p>
+</P>
+
+<h4>
+  <P>
+    <div style="text-indent: 10%">Common side effects</div>
+  </P>
+</h4>
 
 <P>
 The most common side effects given the drug list:
-  <ol>
+  <ul style="list-style-type:none;">
     <% @commonSideEffects.each do |cse| %>
       <li>
         <div style="text-indent: 2.0em">
@@ -141,7 +140,7 @@ The most common side effects given the drug list:
         </div>
       </li>
     <% end %>
-  </ol>
+  </ul>
 </P>
 
 <P>
