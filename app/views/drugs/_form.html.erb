@@ -18,9 +18,8 @@
 
   <div class="field">
     <%= form.label :classification %>
-    <%# form.text_field :classification %>
     <%= select(:drug, :classification_id,
-      options_from_collection_for_select(Classification.order(:name).all,"id","name"))
+      options_from_collection_for_select(Classification.order(:name).all,"id","name",if @drug.classification then @drug.classification.id else nil end))
     %>
   </div>
 
