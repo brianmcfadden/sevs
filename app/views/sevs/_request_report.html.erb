@@ -41,8 +41,8 @@
     if (list.namedItem(option.value) == null) {
       list.add(option);
     }
-    // list_options_change(fromListName);
     list_options_change(toListName);
+    list.scrollTop = list.scrollHeight;
   }
   function list_remove_selected(listName) {
     var list = document.getElementById(listName);
@@ -55,6 +55,10 @@
       list.options[i].selected = true;
     }
   }
+  function onEnter(event, fromList, toList) {
+    return event.charCode !== 13 ||
+      list_add_from_to(fromList, toList);
+  }
   function formsubmit() {
     list_select_all("drugList");
     list_select_all("symptomList");
@@ -65,7 +69,8 @@
     <td>
       <%= select_tag "symptom-select",
           options_from_collection_for_select(Symptom.order(:name).all,
-          "id", "name") %>
+          "id", "name"),
+          :onkeypress => "onEnter(event, 'symptom-select', 'symptomList') " %>
       <%= button_tag 'Add symptom to list',
           type: 'button',
           :onclick => 'list_add_from_to( "symptom-select", "symptomList" )' %>
@@ -73,7 +78,8 @@
     <td>
       <%= select_tag "drug-select",
           options_from_collection_for_select(Drug.order(:name).all,
-          "id", "name") %>
+          "id", "name"),
+          :onkeypress => "onEnter(event, 'drug-select', 'drugList') " %>
       <%= button_tag 'Add drug to list',
           type: 'button',
           :onclick => 'list_add_from_to( "drug-select", "drugList" )' %>
