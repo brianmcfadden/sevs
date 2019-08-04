@@ -8,8 +8,6 @@ class SevsController < ApplicationController
     respond_to do |format|
       Rails.logger.level = 0
 
-      Rails.logger.info params[:symptomList].pretty_inspect
-
       @symptoms = []
       @prescription = []
       @drugsWithSymptoms = []
@@ -65,15 +63,13 @@ class SevsController < ApplicationController
       #
       @symptoms.each do |symptom|
         @prescription.each do |drug|
-          SideEffect.where(drug_id: drug.id).each do |se|
-            if se.symptom_id == symptom.id
-              dws = @drugsWithSymptoms.find { |dws| dws[:drug].id == se.drug_id }
-              if dws
-                dws[:symptoms].push(symptom)
-              else
-                @drugsWithSymptoms.push({ :drug => drug,
-                                          :symptoms => [ symptom ] } )
-              end
+          SideEffect.where(:drug_id => drug.id, :symptom_id => symptom.id).each do |se|
+            dws = @drugsWithSymptoms.find { |dws| dws[:drug].id == se.drug_id }
+            if dws
+              dws[:symptoms].push(symptom)
+            else
+              @drugsWithSymptoms.push({ :drug => drug,
+                                        :symptoms => [ symptom ] } )
             end
           end
         end

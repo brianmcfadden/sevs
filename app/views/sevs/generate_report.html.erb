@@ -109,15 +109,14 @@ function printReport() {
   <% @drugsWithSymptoms.each do |d| %>
     <p>
       <B><%= d[:drug].name %></B>
-      is manufactured by <%= d[:drug].manufacturer.name %>
-      and belongs to the
-      <I><%= d[:drug].classification.name %></I>
-      class of drugs.  The side effects include:
+      <%= if d[:drug].manufacturer then puts(" is manufactured by "); d[:drug].manufacturer.name; end %>
+      <%= if d[:drug].manufacturer && d[:drug].classification then puts(" and "); end %>
+      <%= if d[:drug].classification then puts(" belongs to the <I>"); d[:drug].classification.name; puts("</I> class of drugs"); end %>
+      <%= if d[:drug].manufacturer || d[:drug].classification then puts("."); end %>
+      The side effects include:
       <% @drugsWithSymptoms.find_all { |dws| dws[:drug].id == d[:drug].id }.
                             each do |dws| %>
-        <% dws[:symptoms].each do |symptom| %>
-          <%= symptom.name %>
-        <% end %>
+        <%= dws[:symptoms].map { |s| s.name }.join(", ") %>
       <% end %>
     </p>
   <% end %>
