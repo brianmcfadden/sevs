@@ -16,19 +16,19 @@
     <%= form.text_field :name, autofocus: true %>
   </div>
 
-  <div class="field">
-    <%= form.label :manufacturer %>
-    <%= select(:drug, :manufacturer_id,
+  <!-- div class="field">
+    <%# form.label :manufacturer %>
+    <%# select(:drug, :manufacturer_id,
       options_from_collection_for_select(Manufacturer.order(:name).all,"id","name",if @drug.manufacturer then @drug.manufacturer.id else nil end ))
     %>
   </div>
 
   <div class="field">
-    <%= form.label :classification %>
-    <%= select(:drug, :classification_id,
+    <%# form.label :classification %>
+    <%# select(:drug, :classification_id,
       options_from_collection_for_select(Classification.order(:name).all,"id","name",if @drug.classification then @drug.classification.id else nil end))
     %>
-  </div>
+  </div -->
 
   <div class="actions">
     <%= form.submit %>
