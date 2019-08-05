@@ -5,7 +5,7 @@ class SymptomsController < ApplicationController
   # GET /symptoms.json
   def index
     @title = "Symptoms index"
-    @symptoms = Symptom.all
+    @symptoms = Symptom.all.paginate page: params[:page], per_page: 20
   end
 
   # GET /symptoms/1

@@ -5,7 +5,7 @@ class SideEffectsController < ApplicationController
   # GET /side_effects.json
   def index
     @title = "Side Effects index"
-    @side_effects = SideEffect.all
+    @side_effects = SideEffect.all.paginate page: params[:page], per_page: 20
   end
 
   # GET /side_effects/1

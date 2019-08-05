@@ -6,6 +6,9 @@
 <%= link_to 'New Drug', new_drug_path, autofocus: true %>
 </p>
 
+<%= will_paginate @drugs %>
+<BR>
+
 <table>
   <thead>
     <tr>
@@ -27,6 +30,3 @@
     <% end %>
   </tbody>
 </table>
-
-<br>
-

@@ -6,6 +6,9 @@
 <%= link_to 'New Symptom', new_symptom_path, autofocus: true %>
 </p>
 
+<%= will_paginate @symptoms %>
+<BR>
+
 <table>
   <thead>
     <tr>
@@ -25,5 +28,3 @@
     <% end %>
   </tbody>
 </table>
-
-<br>

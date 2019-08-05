@@ -6,6 +6,9 @@
 <%= link_to 'New Side Effect', new_side_effect_path, autofocus: true %>
 </p>
 
+<%= will_paginate @side_effects %>
+<BR>
+
 <table>
   <thead>
     <tr>
@@ -27,6 +30,3 @@
     <% end %>
   </tbody>
 </table>
-
-<br>
-
