@@ -61,6 +61,10 @@
     list.remove(list.selectedIndex);
     list_options_change(listName);
   }
+  function list_remove_all(listName) {
+    var list = document.getElementById(listName);
+    list.innerHTML = '';
+  }
   function list_select_all(listName) {
     var list = document.getElementById(listName);
     for(var i=0; i<list.options.length; i++) {
@@ -102,11 +106,25 @@
       <%= select_tag "symptomList", "",
           :size => 5, :style => "width: 150px;", multiple: true,
           :ondblclick => 'list_remove_selected("symptomList")' %>
+      <BR>
+      <%= button_tag 'Remove',
+          type: 'button',
+          :onclick => 'list_remove_selected("symptomList")' %>
+      <%= button_tag 'Clear',
+          type: 'button',
+          :onclick => 'list_remove_all("symptomList")' %>
     </td>
     <td>
       <%= select_tag "drugList", "",
           :size => 5, :style => "width: 150px;", multiple: true,
           :ondblclick => 'list_remove_selected("drugList")' %>
+      <BR>
+      <%= button_tag 'Remove',
+          type: 'button',
+          :onclick => 'list_remove_selected("drugList")' %>
+      <%= button_tag 'Clear',
+          type: 'button',
+          :onclick => 'list_remove_all("drugList")' %>
     </td>
   </tr>
 </table>
