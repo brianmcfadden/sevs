@@ -1,0 +1,4 @@
+#!/bin/sh
+SEVSDIR=~/sevs
+kill $(cat ${SEVSDIR}/sevs.pid)
+rm ${SEVSDIR}/sevs.pid
