@@ -43,6 +43,24 @@
 }
 </style>
 
+<script>
+sevs_help_text="\n\
+          SEvS\n\
+\n\
+SEVS Home - Generates reports\n\
+\n\
+Drugs - Examines the drug table\n\
+\n\
+Symptoms - Examines the symptoms tables\n\
+\n\
+Side Effects - Examines the table that\n\
+          links Drugs and Side Effects\n\
+";
+function sevs_help() {
+  alert(sevs_help_text);
+}
+</script>
+
 <div class="header" style="text-align: center">
   <h1>SEvS</h1>
   <h2>Side Effects vs. Symptoms</h2>
@@ -55,6 +73,6 @@
   <a href="/side_effects">Side Effects</a>
   <!-- a href="/classifications">Classifications</a>
   <a href="/manufacturers">Manufacturers</a -->
-  <a class="right" onclick='alert("No help is available yet")'>Help</a>
+  <a class="right" onclick='sevs_help()'>Help</a>
 </div>
 
