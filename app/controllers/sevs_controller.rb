@@ -23,15 +23,21 @@ class SevsController < ApplicationController
       # build the prescription list for the view
       #
       @drugList.each do |drugId|
-        @prescription.push(Drug.find(drugId))
-      end
+        begin found = Drug.find(drugId)
+        @prescription.push(found)
+        rescue
+        end
+      end if @drugList
 
       #
       # build the symptom list for the view
       #
       @symptomList.each do |symptom_id|
-        @symptoms.push(Symptom.find(symptom_id))
-      end
+        begin found = Symptom.find(symptom_id)
+        @symptoms.push(found)
+        rescue
+        end
+      end if @symptomList
 
       #
       # build list of common side effects by going through
