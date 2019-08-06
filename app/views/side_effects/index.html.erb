@@ -3,7 +3,7 @@
 <h1>Side Effects</h1>
 
 <p>
-<%= link_to 'New Side Effect', new_side_effect_path, autofocus: true %>
+<%= link_to 'New Side Effect', new_side_effect_path, autofocus: true unless Rails.env.production? %>
 </p>
 
 <%= will_paginate @side_effects %>
@@ -24,8 +24,8 @@
         <td><%= side_effect.drug.name %></td>
         <td><%= side_effect.symptom.name %></td>
         <td><%= link_to 'Show', side_effect %></td>
-        <td><%= link_to 'Edit', edit_side_effect_path(side_effect) %></td>
-        <td><%= link_to 'Destroy', side_effect, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', edit_side_effect_path(side_effect) unless Rails.env.production? %></td>
+        <td><%= link_to 'Destroy', side_effect, method: :delete, data: { confirm: 'Are you sure?' } unless Rails.env.production? %></td>
       </tr>
     <% end %>
   </tbody>

@@ -3,7 +3,7 @@
 <h1>Drugs</h1>
 
 <p>
-<%= link_to 'New Drug', new_drug_path, autofocus: true %>
+<%= link_to 'New Drug', new_drug_path, autofocus: true unless Rails.env.production? %>
 </p>
 
 <%= will_paginate @drugs %>
@@ -24,8 +24,8 @@
         <td><%# if drug.manufacturer then drug.manufacturer.name end %></td>
         <td><%# if drug.classification then drug.classification.name end %></td>
         <td><%= link_to 'Show', drug %></td>
-        <td><%= link_to 'Edit', edit_drug_path(drug) %></td>
-        <td><%= link_to 'Destroy', drug, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', edit_drug_path(drug) unless Rails.env.production? %></td>
+        <td><%= link_to 'Destroy', drug, method: :delete, data: { confirm: 'Are you sure?' } unless Rails.env.production? %></td>
       </tr>
     <% end %>
   </tbody>

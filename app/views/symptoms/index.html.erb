@@ -3,7 +3,7 @@
 <h1>Symptoms</h1>
 
 <p>
-<%= link_to 'New Symptom', new_symptom_path, autofocus: true %>
+<%= link_to 'New Symptom', new_symptom_path, autofocus: true unless Rails.env.production? %>
 </p>
 
 <%= will_paginate @symptoms %>
@@ -22,8 +22,8 @@
       <tr>
         <td><%= symptom.name %></td>
         <td><%= link_to 'Show', symptom %></td>
-        <td><%= link_to 'Edit', edit_symptom_path(symptom) %></td>
-        <td><%= link_to 'Destroy', symptom, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', edit_symptom_path(symptom) unless Rails.env.production? %></td>
+        <td><%= link_to 'Destroy', symptom, method: :delete, data: { confirm: 'Are you sure?' } unless Rails.env.production? %></td>
       </tr>
     <% end %>
   </tbody>
