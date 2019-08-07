@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   if Rails.env.production? 
   then
     root 'sevs#index'
-    resources :sevs, only: [:index]
+    resources :sevs, only: [:index, :create]
     resources :side_effects, only: [:index, :show]
     resources :symptoms, only: [:index, :show]
     resources :drugs, only: [:index, :show]
@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     resources :manufacturers
     resources :classifications
     root 'sevs#index'
-    resources :sevs, only: [:index]
+    resources :sevs, only: [:index, :create]
     resources :side_effects
     resources :symptoms
     resources :drugs
