@@ -81,50 +81,92 @@
     list_select_all("symptomList");
   }
 
+function convertJsonToOptions(json) {
+    return '<option value="Internet Explorer"> <option value="Firefox"> <option value="Chrome"> <option value="Opera"> <option value="Safari">';
+}
+
 var drug_xhr = new XMLHttpRequest();
 drug_xhr.onreadystatechange = function() {
-  console.log("drug_xhr.onreadystatechange");
   if (drug_xhr.readyState === 4 && drug_xhr.status === 200) {
-    console.log(drug_xhr.response);
+    data = document.getElementById('drug_data');
+    var response = JSON.parse( drug_xhr.response );
+    data.innerHTML = "";
+    response.forEach(function(item) {
+      var option = document.createElement('A');
+      option.value = item.name;
+      option.id = item.id;
+      option.innerHTML = item.name;
+      data.appendChild(document.createElement('br'));
+      data.appendChild(option);
+      // console.log(option);
+    });
+    //console.log("-----");
   }
 }
 var symptom_xhr = new XMLHttpRequest();
 symptom_xhr.onreadystatechange = function() {
   if (symptom_xhr.readyState === 4 && symptom_xhr.status === 200) {
-    console.log(symptom_xhr.response);
+    data = document.getElementById('symptom_data');
+    var response = JSON.parse( symptom_xhr.response );
+    data.innerHTML = "";
+    response.forEach(function(item) {
+      var option = document.createElement('A');
+      option.value = item.name;
+      option.id = item.id;
+      option.innerHTML = item.name;
+      data.appendChild(document.createElement('br'));
+      data.appendChild(option);
+      //console.log(option);
+    });
+    //console.log("-----");
   }
 }
 
 function onDrugKey(event, text) {
-  if (text.length >= 2) {
-    url = 'http://localhost:5375/check/drugs/' + text;
+  url = 'http://localhost:5375/check/drugs/' + text;
+  var data = document.getElementById('drug_data');
+  if (text.length == 0) {
+    data.style.display = "none";
+  } else {
+    data.style.display = "block";
     drug_xhr.open('GET', url, true);
     drug_xhr.send();
-    console.log("sent drug_xhr : " + url);
   }
 }
 function onSymptomKey(event, text) {
-  if (text.length >= 2) {
-    url = 'http://localhost:5375/check/symptoms/' + text;
+  url = 'http://localhost:5375/check/symptoms/' + text;
+  var data = document.getElementById('symptom_data');
+  if (text.length == 0) {
+    data.style.display = "none";
+  } else {
+    data.style.display = "block";
     symptom_xhr.open('GET', url, true);
     symptom_xhr.send();
-    console.log("sent symptom_xhr : " + url);
   }
+  return false;
 }
 
 </script>
 
   <tr>
     <td>
-      <%= text_field_tag 'symptom-text', '',
-          onkeyup: 'onSymptomKey(event, this.value);' %>
+      <div style="position: relative; display: inline-block;">
+        <%= text_field_tag 'symptom_text', '',
+            onkeyup: 'onSymptomKey(event, this.value);' %>
+        <div id='symptom_data' style="position: absolute; background-color: #f1f1f1; width: 100%"></div>
+      </div>
+      <br>
       <%= button_tag 'Add symptom to list',
           type: 'button',
           :onclick => 'list_add_from_to( "symptom-select", "symptomList" )' %>
     </td>
     <td>
-      <%= text_field_tag 'drug-text', '',
-          onkeyup: 'onDrugKey(event, this.value);' %>
+      <div style="position: relative; display: inline-block;">
+        <%= text_field_tag 'drugtext', '',
+            onkeyup: 'onDrugKey(event, this.value);' %>
+        <div id='drug_data' style="position: absolute; background-color: #f1f1f1; width: 100%"></div>
+      </dir>
+      <br>
       <%= button_tag 'Add drug to list',
           type: 'button',
           :onclick => 'list_add_from_to( "drug-select", "drugList" )' %>
