@@ -20,9 +20,9 @@
 
 <table border=0 style="text-align: center; width:100%">
   <tr>
-    <td>Choose Symptoms from the drop-down below
+    <td>Type a symptom into the box below, and select from the drop-down to add to the symptom list
     </td>
-    <td>Choose Meds from the drop-down below
+    <td>Type the name of a drug into the box below, and select from the drop-down to add to the prescription list
     </td>
   </tr>
 
@@ -175,24 +175,20 @@ function doOnKey(event, type, text) {
     <td>
       <div style="position: relative; display: inline-block;">
         <%= text_field_tag 'symptom_text', '',
+            autocomplete: "off",
             onkeyup: 'doOnKey(event, inType.SYMPTOM, this.value);' %>
         <div id='symptom_data' style="position: absolute; background-color: #f1f1f1; width: 100%; border: solid; display: none;"></div>
       </div>
       <br>
-      <%= button_tag 'Add symptom to list',
-          type: 'button',
-          :onclick => 'list_add_from_to( "symptom-select", "symptomList" )' %>
     </td>
     <td>
       <div style="position: relative; display: inline-block;">
         <%= text_field_tag 'drug_text', '',
+            autocomplete: "off",
             onkeyup: 'doOnKey(event, inType.DRUG, this.value);' %>
         <div id='drug_data' style="position: absolute; background-color: #f1f1f1; width: 100%; border: solid; display: none;"></div>
       </dir>
       <br>
-      <%= button_tag 'Add drug to list',
-          type: 'button',
-          :onclick => 'list_add_from_to( "drug-select", "drugList" )' %>
     </td>
   </tr>
   <tr>
