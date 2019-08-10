@@ -9,5 +9,7 @@ if [ -f ${SEVSDIR}/sevs.pid ]
 then
   ps -fp $(cat ${SEVSDIR}/sevs.pid) > /dev/null 2>&1 && ./stop
 fi
+
+logrotate -s log/status logrotate.conf >/dev/null 2>&1
 rails s -p 5375 -b 0.0.0.0 > $SEVSDIR/sevs.log &
 echo $! | tee $SEVSDIR/sevs.pid
