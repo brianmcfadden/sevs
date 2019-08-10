@@ -2,19 +2,29 @@ class CheckController < ApplicationController
   def check
     type = params[:type]
     text = params[:text]
-    count = 10
+    count = 100
 
     out = []
 
     if type == 'drugs'
     then
-      Drug.where("lower(name) LIKE lower(?)", "%#{text}%").take(count).each do |d|
-        out.push(d)
+      if text == nil
+      then
+        out=[Drug.new]
+      else
+        Drug.where("lower(name) LIKE lower(?)", "%#{text}%").take(count).each do |d|
+          out.push(d)
+        end
       end
     elsif type == 'symptoms'
     then
-      Symptom.where("lower(name) LIKE lower(?)", "%#{text}%").take(count).each do |s|
-        out.push(s)
+      if text == nil
+      then
+        out=[Symptom.new]
+      else
+        Symptom.where("lower(name) LIKE lower(?)", "%#{text}%").take(count).each do |s|
+          out.push(s)
+        end
       end
     end
     

@@ -16,5 +16,6 @@ Rails.application.routes.draw do
     resources :symptoms, only: [:index, :show]
     resources :drugs, only: [:index, :show]
     get 'check/:type/:text', to: 'check#check'
+    get 'check/:type', to: 'check#check'
   end
 end
