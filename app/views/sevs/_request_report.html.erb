@@ -29,6 +29,7 @@
 <!-- ------------------------------------------------- -->
 
 <script>
+
   function loadListOptions(listName) {
     if (typeof(Storage) !== "undefined") {
       var list = document.getElementById(listName);
@@ -79,23 +80,51 @@
     list_select_all("drugList");
     list_select_all("symptomList");
   }
+
+var drug_xhr = new XMLHttpRequest();
+drug_xhr.onreadystatechange = function() {
+  console.log("drug_xhr.onreadystatechange");
+  if (drug_xhr.readyState === 4 && drug_xhr.status === 200) {
+    console.log(drug_xhr.response);
+  }
+}
+var symptom_xhr = new XMLHttpRequest();
+symptom_xhr.onreadystatechange = function() {
+  if (symptom_xhr.readyState === 4 && symptom_xhr.status === 200) {
+    console.log(symptom_xhr.response);
+  }
+}
+
+function onDrugKey(event, text) {
+  if (text.length >= 2) {
+    url = 'http://localhost:5375/check/drugs/' + text;
+    drug_xhr.open('GET', url, true);
+    drug_xhr.send();
+    console.log("sent drug_xhr : " + url);
+  }
+}
+function onSymptomKey(event, text) {
+  if (text.length >= 2) {
+    url = 'http://localhost:5375/check/symptoms/' + text;
+    symptom_xhr.open('GET', url, true);
+    symptom_xhr.send();
+    console.log("sent symptom_xhr : " + url);
+  }
+}
+
 </script>
 
   <tr>
     <td>
-      <%= select_tag "symptom-select",
-          options_from_collection_for_select(Symptom.order(:name).all,
-          "id", "name"),
-          :onkeypress => "onEnter(event, 'symptom-select', 'symptomList') " %>
+      <%= text_field_tag 'symptom-text', '',
+          onkeyup: 'onSymptomKey(event, this.value);' %>
       <%= button_tag 'Add symptom to list',
           type: 'button',
           :onclick => 'list_add_from_to( "symptom-select", "symptomList" )' %>
     </td>
     <td>
-      <%= select_tag "drug-select",
-          options_from_collection_for_select(Drug.order(:name).all,
-          "id", "name"),
-          :onkeypress => "onEnter(event, 'drug-select', 'drugList') " %>
+      <%= text_field_tag 'drug-text', '',
+          onkeyup: 'onDrugKey(event, this.value);' %>
       <%= button_tag 'Add drug to list',
           type: 'button',
           :onclick => 'list_add_from_to( "drug-select", "drugList" )' %>
