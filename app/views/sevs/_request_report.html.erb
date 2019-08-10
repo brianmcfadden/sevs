@@ -106,13 +106,13 @@ function doOptionClicked(itemid, itemname, type) {
     default:
       return false;
   }
-  console.log(itemname);
   option = document.createElement("option");
   option.id = itemid;
   option.value = itemid;
   option.text = itemname;
-  listElement.add(option);
-  console.log(option);
+  if (listElement.namedItem(option.value) == null) {
+    listElement.add(option);
+  }
   dropDownElement.style.display = "none";
 }
 function doReadyStateChange(type) {
