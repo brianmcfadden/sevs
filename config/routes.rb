@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     resources :side_effects, only: [:index, :show]
     resources :symptoms, only: [:index, :show]
     resources :drugs, only: [:index, :show]
+    get 'check/:type/:text', to: 'check#check'
+    get 'check/:type', to: 'check#check'
   else
     resources :manufacturers
     resources :classifications
