@@ -85,74 +85,97 @@ function convertJsonToOptions(json) {
     return '<option value="Internet Explorer"> <option value="Firefox"> <option value="Chrome"> <option value="Opera"> <option value="Safari">';
 }
 
+const inType = {
+  DRUG: 1,
+  SYMPTOM: 2
+}
 var drug_xhr = new XMLHttpRequest();
-drug_xhr.onreadystatechange = function() {
-  if (drug_xhr.readyState === 4 && drug_xhr.status === 200) {
-    data = document.getElementById('drug_data');
-    var response = JSON.parse( drug_xhr.response );
-    data.innerHTML = "";
-    response.forEach(function(item) {
-      var option = document.createElement('A');
-      option.value = item.name;
-      option.id = item.id;
-      option.innerHTML = item.name;
-      data.appendChild(document.createElement('br'));
-      data.appendChild(option);
-      // console.log(option);
-    });
-    //console.log("-----");
-  }
-}
+drug_xhr.onreadystatechange = function() { doReadyStateChange(inType.DRUG); }
 var symptom_xhr = new XMLHttpRequest();
-symptom_xhr.onreadystatechange = function() {
-  if (symptom_xhr.readyState === 4 && symptom_xhr.status === 200) {
-    data = document.getElementById('symptom_data');
-    var response = JSON.parse( symptom_xhr.response );
+symptom_xhr.onreadystatechange = function() { doReadyStateChange(inType.SYMPTOM); }
+function doOptionClicked(itemid, itemname, type) {
+  switch(type) {
+    case inType.DRUG:
+      listElement = document.getElementById("drugList");
+      dropDownElement = document.getElementById("drug_data");
+      break;
+    case inType.SYMPTOM:
+      listElement = document.getElementById("symptomList");
+      dropDownElement = document.getElementById("symptom_data");
+      break;
+    default:
+      return false;
+  }
+  console.log(itemname);
+  option = document.createElement("option");
+  option.id = itemid;
+  option.value = itemid;
+  option.text = itemname;
+  listElement.add(option);
+  console.log(option);
+  dropDownElement.style.display = "none";
+}
+function doReadyStateChange(type) {
+  switch(type) {
+    case inType.DRUG:
+      xhr = drug_xhr;
+      dataElement = "drug_data";
+      break;
+    case inType.SYMPTOM:
+      xhr = symptom_xhr;
+      dataElement = "symptom_data";
+      break;
+    default:
+      return;
+  }
+  if (xhr.readyState === 4 && xhr.status === 200) {
+    var data = document.getElementById(dataElement);
+    var response = JSON.parse( xhr.response );
     data.innerHTML = "";
     response.forEach(function(item) {
       var option = document.createElement('A');
       option.value = item.name;
       option.id = item.id;
       option.innerHTML = item.name;
+      option.href = "javascript:doOptionClicked("+item.id+",\""+item.name+"\","+type+");";
       data.appendChild(document.createElement('br'));
       data.appendChild(option);
-      //console.log(option);
     });
-    //console.log("-----");
   }
 }
-
-function onDrugKey(event, text) {
-  url = 'http://localhost:5375/check/drugs/' + text;
-  var data = document.getElementById('drug_data');
+function doOnKey(event, type, text) {
+  switch(type) {
+    case inType.DRUG:
+      inElement = "drug_data";
+      inUrlBase = "http://localhost:5375/check/drugs/";
+      xhr = drug_xhr;
+      break;
+    case inType.SYMPTOM:
+      inElement = "symptom_data";
+      inUrlBase = "http://localhost:5375/check/symptoms/";
+      xhr = symptom_xhr;
+      break;
+    default:
+      return false;
+  }
+  var url = inUrlBase + text;
+  var data = document.getElementById(inElement);
   if (text.length == 0) {
     data.style.display = "none";
   } else {
     data.style.display = "block";
-    drug_xhr.open('GET', url, true);
-    drug_xhr.send();
-  }
-}
-function onSymptomKey(event, text) {
-  url = 'http://localhost:5375/check/symptoms/' + text;
-  var data = document.getElementById('symptom_data');
-  if (text.length == 0) {
-    data.style.display = "none";
-  } else {
-    data.style.display = "block";
-    symptom_xhr.open('GET', url, true);
-    symptom_xhr.send();
+    xhr.open('GET', url, true);
+    xhr.send();
   }
   return false;
 }
-
 </script>
 
   <tr>
     <td>
       <div style="position: relative; display: inline-block;">
         <%= text_field_tag 'symptom_text', '',
-            onkeyup: 'onSymptomKey(event, this.value);' %>
+            onkeyup: 'doOnKey(event, inType.SYMPTOM, this.value);' %>
         <div id='symptom_data' style="position: absolute; background-color: #f1f1f1; width: 100%; border: solid; display: none;"></div>
       </div>
       <br>
@@ -162,8 +185,8 @@ function onSymptomKey(event, text) {
     </td>
     <td>
       <div style="position: relative; display: inline-block;">
-        <%= text_field_tag 'drugtext', '',
-            onkeyup: 'onDrugKey(event, this.value);' %>
+        <%= text_field_tag 'drug_text', '',
+            onkeyup: 'doOnKey(event, inType.DRUG, this.value);' %>
         <div id='drug_data' style="position: absolute; background-color: #f1f1f1; width: 100%; border: solid; display: none;"></div>
       </dir>
       <br>
