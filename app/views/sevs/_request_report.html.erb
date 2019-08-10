@@ -147,12 +147,12 @@ function doOnKey(event, type, text) {
   switch(type) {
     case inType.DRUG:
       inElement = "drug_data";
-      inUrlBase = "http://localhost:5375/check/drugs/";
+      inUrlBase = "<%= root_url %>check/drugs/";
       xhr = drug_xhr;
       break;
     case inType.SYMPTOM:
       inElement = "symptom_data";
-      inUrlBase = "http://localhost:5375/check/symptoms/";
+      inUrlBase = "<%= root_url %>check/symptoms/";
       xhr = symptom_xhr;
       break;
     default:
