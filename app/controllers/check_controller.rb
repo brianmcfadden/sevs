@@ -12,7 +12,7 @@ class CheckController < ApplicationController
       then
         out=[Drug.new]
       else
-        Drug.where("lower(name) LIKE lower(?)", "%#{text}%").take(count).each do |d|
+        Drug.where("lower(name) LIKE lower(?)", "%#{text}%").order(:name).take(count).each do |d|
           out.push(d)
         end
       end
@@ -22,7 +22,7 @@ class CheckController < ApplicationController
       then
         out=[Symptom.new]
       else
-        Symptom.where("lower(name) LIKE lower(?)", "%#{text}%").take(count).each do |s|
+        Symptom.where("lower(name) LIKE lower(?)", "%#{text}%").order(:name).take(count).each do |s|
           out.push(s)
         end
       end
