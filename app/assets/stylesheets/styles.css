@@ -8,6 +8,9 @@ div.explanation {
   margin: 0 auto;
   text-align: center;
 }
+p.explanation {
+  font-size: 150%
+}
 div.inputBlock {
   position: relative;
   display: inline-block;
