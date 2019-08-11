@@ -105,12 +105,14 @@ function doReadyStateChange(type) {
     var response = JSON.parse( xhr.response );
     data.innerHTML = "";
     response.forEach(function(item) {
-      var option = document.createElement('A');
+      var option = document.createElement('a');
+      option.style = "text-decoration: none";
+      option.style.border = '1px solid';
+      option.style.display = 'block';
       option.value = item.name;
       option.id = item.id;
       option.innerHTML = item.name;
       option.href = "javascript:doOptionClicked("+item.id+",\""+item.name+"\","+type+");";
-      data.appendChild(document.createElement('br'));
       data.appendChild(option);
     });
   }
@@ -161,7 +163,7 @@ function doOnKey(event, type, text) {
     Clicking on the button that says "Generate Report" will show you the report and allow you to print or save it locally.
   </p>
 </div>
-<table border=0 style="text-align: center; width:100%">
+<table style="text-align: center; width:100%; border: solid;">
   <tr>
     <td>Type a symptom into the box below, and select from the drop-down to add to the symptom list
     </td>
