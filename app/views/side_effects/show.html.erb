@@ -12,7 +12,9 @@
   (<%= @side_effect.symptom.id %>)
 </p>
 
+<% unless Rails.env.production? %>
 <%= link_to 'Edit', edit_side_effect_path(@side_effect) %> |
+<% end %>
 <%= link_to 'Back', side_effects_path, autofocus: true %>
 
 <script>

@@ -27,7 +27,9 @@
   </P>
 </P>
 
+<% unless Rails.env.production? %>
 <%= link_to 'Edit', edit_drug_path(@drug) %> |
+<% end %>
 <%= link_to 'Back', drugs_path, autofocus: true %>
 
 <script>

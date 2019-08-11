@@ -18,7 +18,9 @@
   </P>
 </P>
 
+<% unless Rails.env.production? %>
 <%= link_to 'Edit', edit_symptom_path(@symptom) %> |
+<% end %>
 <%= link_to 'Back', symptoms_path, autofocus: true %>
 
 <script>
