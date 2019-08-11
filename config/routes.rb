@@ -14,9 +14,9 @@ Rails.application.routes.draw do
     resources :classifications
     root 'sevs#index'
     resources :sevs, only: [:index, :create]
-    resources :side_effects, only: [:index, :show]
-    resources :symptoms, only: [:index, :show]
-    resources :drugs, only: [:index, :show]
+    resources :side_effects, only: [:index, :show, :new, :edit]
+    resources :symptoms, only: [:index, :show, :new, :edit]
+    resources :drugs, only: [:index, :show, :new, :edit]
     get 'check/:type/:text', to: 'check#check'
     get 'check/:type', to: 'check#check'
   end
