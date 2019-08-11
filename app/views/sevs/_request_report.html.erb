@@ -107,6 +107,7 @@ function doReadyStateChange(type) {
     response.forEach(function(item) {
       var option = document.createElement('a');
       option.style = "text-decoration: none";
+      option.style.padding = '8px 0px';
       option.style.border = '1px solid';
       option.style.display = 'block';
       option.value = item.name;
