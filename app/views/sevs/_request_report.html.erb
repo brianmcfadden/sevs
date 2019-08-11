@@ -54,14 +54,18 @@
     list_select_all("symptomList");
   }
 
+////////////////////////////////////////////////////////////////
+
 const inType = {
   DRUG: 1,
   SYMPTOM: 2
 }
+
 var drug_xhr = new XMLHttpRequest();
 drug_xhr.onreadystatechange = function() { doReadyStateChange(inType.DRUG); }
 var symptom_xhr = new XMLHttpRequest();
 symptom_xhr.onreadystatechange = function() { doReadyStateChange(inType.SYMPTOM); }
+
 function doOptionClicked(itemid, itemname, type) {
   switch(type) {
     case inType.DRUG:
@@ -87,6 +91,7 @@ function doOptionClicked(itemid, itemname, type) {
   list_options_change(listName);
   dropDownElement.style.display = "none";
 }
+
 function doReadyStateChange(type) {
   switch(type) {
     case inType.DRUG:
@@ -106,7 +111,7 @@ function doReadyStateChange(type) {
     data.innerHTML = "";
     response.forEach(function(item) {
       var option = document.createElement('a');
-      option.style = "text-decoration: none";
+      option.style = "text-decoration: none; font-family: verdana, arial, helvetica, sans-serif; font-size: 13px";
       option.style.padding = '8px 0px';
       option.style.border = '1px solid';
       option.style.display = 'block';
@@ -118,6 +123,7 @@ function doReadyStateChange(type) {
     });
   }
 }
+
 function doOnKey(event, type, text) {
   switch(type) {
     case inType.DRUG:
@@ -144,6 +150,7 @@ function doOnKey(event, type, text) {
   }
   return false;
 }
+
 </script>
 
 <!-- ------------------------------------------------- -->
