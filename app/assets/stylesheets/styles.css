@@ -1,0 +1,33 @@
+table {
+  text-align: center;
+  width:100%;
+  border: solid;
+}
+div.explanation {
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+}
+div.inputBlock {
+  position: relative;
+  display: inline-block;
+}
+div.dropDownBlock {
+  position: absolute;
+  background-color: #f1f1f1;
+  border: solid;
+  display: none; /* start off hidden */
+/*width: 100%; */
+}
+select.list {
+  width: 150px;
+}
+button.listButton {
+  background-color: #f1f1f1;
+}
+form.mainform {
+  background-color: #c1c1c1;
+}
+body { 
+  background-color: #a1a1a1;
+}

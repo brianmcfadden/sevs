@@ -1,163 +1,10 @@
 <%= form_with(model: @sevs, local: true,
+    :class => "mainform",
     :html => { :onsubmit => 'formsubmit();' } ) do |f| %>
-
-<script>
-
-  function loadListOptions(listName) {
-    if (typeof(Storage) !== "undefined") {
-      var list = document.getElementById(listName);
-      list.innerHTML = window.localStorage.getItem(listName);
-    }
-  }
-  function list_options_change(listName) {
-    if (typeof(Storage) !== "undefined") {
-      var list = document.getElementById(listName);
-      window.localStorage.setItem(listName, list.innerHTML);
-    }
-  }
-
-  function list_add_from_to(fromListName, toListName) {
-    var fromList = document.getElementById(fromListName);
-    var fromListItem = fromList.options[fromList.selectedIndex];
-    var option = document.createElement("option");
-    option.id = fromListItem.value; // setting ID so we can use namedItem
-    option.value = fromListItem.value;
-    option.text = fromListItem.text;
-    var list = document.getElementById(toListName);
-    if (list.namedItem(option.value) == null) {
-      list.add(option);
-    }
-    list_options_change(toListName);
-    list.scrollTop = list.scrollHeight;
-  }
-  function list_remove_selected(listName) {
-    var list = document.getElementById(listName);
-    list.remove(list.selectedIndex);
-    list_options_change(listName);
-  }
-  function list_remove_all(listName) {
-    var list = document.getElementById(listName);
-    list.innerHTML = '';
-  }
-  function list_select_all(listName) {
-    var list = document.getElementById(listName);
-    for(var i=0; i<list.options.length; i++) {
-      list.options[i].selected = true;
-    }
-  }
-  function onEnter(event, fromList, toList) {
-    return event.charCode !== 13 ||
-      list_add_from_to(fromList, toList);
-  }
-  function formsubmit() {
-    list_select_all("drugList");
-    list_select_all("symptomList");
-  }
-
-////////////////////////////////////////////////////////////////
-
-const inType = {
-  DRUG: 1,
-  SYMPTOM: 2
-}
-
-var drug_xhr = new XMLHttpRequest();
-drug_xhr.onreadystatechange = function() { doReadyStateChange(inType.DRUG); }
-var symptom_xhr = new XMLHttpRequest();
-symptom_xhr.onreadystatechange = function() { doReadyStateChange(inType.SYMPTOM); }
-
-function doOptionClicked(itemid, itemname, type) {
-  switch(type) {
-    case inType.DRUG:
-      listName = "drugList";
-      dropDownName = "drug_data";
-      break;
-    case inType.SYMPTOM:
-      listName = "symptomList";
-      dropDownName = "symptom_data";
-      break;
-    default:
-      return false;
-  }
-  listElement = document.getElementById(listName);
-  dropDownElement = document.getElementById(dropDownName);
-  option = document.createElement("option");
-  option.id = itemid;
-  option.value = itemid;
-  option.text = itemname;
-  if (listElement.namedItem(option.value) == null) {
-    listElement.add(option);
-  }
-  list_options_change(listName);
-  dropDownElement.style.display = "none";
-}
-
-function doReadyStateChange(type) {
-  switch(type) {
-    case inType.DRUG:
-      xhr = drug_xhr;
-      dataElement = "drug_data";
-      break;
-    case inType.SYMPTOM:
-      xhr = symptom_xhr;
-      dataElement = "symptom_data";
-      break;
-    default:
-      return;
-  }
-  if (xhr.readyState === 4 && xhr.status === 200) {
-    var data = document.getElementById(dataElement);
-    var response = JSON.parse( xhr.response );
-    data.innerHTML = "";
-    response.forEach(function(item) {
-      var option = document.createElement('a');
-      option.style = "text-decoration: none; font-family: verdana, arial, helvetica, sans-serif; font-size: 13px";
-      option.style.padding = '8px 0px';
-      option.style.border = '1px solid';
-      option.style.display = 'block';
-      option.value = item.name;
-      option.id = item.id;
-      option.innerHTML = item.name;
-      option.href = "javascript:doOptionClicked("+item.id+",\""+item.name+"\","+type+");";
-      data.appendChild(option);
-    });
-  }
-}
-
-function doOnKey(event, type, text) {
-  switch(type) {
-    case inType.DRUG:
-      inElement = "drug_data";
-      inUrlBase = "<%= root_url %>check/drugs/";
-      xhr = drug_xhr;
-      break;
-    case inType.SYMPTOM:
-      inElement = "symptom_data";
-      inUrlBase = "<%= root_url %>check/symptoms/";
-      xhr = symptom_xhr;
-      break;
-    default:
-      return false;
-  }
-  var url = inUrlBase + text;
-  var data = document.getElementById(inElement);
-  if (text.length == 0) {
-    data.style.display = "none";
-  } else {
-    data.style.display = "block";
-    xhr.open('GET', url, true);
-    xhr.send();
-  }
-  return false;
-}
-
-</script>
-
-<!-- ------------------------------------------------- -->
 
 <br>
 
-<div style="width: 50%; margin: 0 auto; text-align: center;">
+<div class="explanation">
   <p>
     This page produces reports that compare the symptoms that you are feeling with the known side effects of the drugs that you're taking.
   </p>
@@ -171,7 +18,8 @@ function doOnKey(event, type, text) {
     Clicking on the button that says "Generate Report" will show you the report and allow you to print or save it locally.
   </p>
 </div>
-<table style="text-align: center; width:100%; border: solid;">
+
+<table>
   <tr>
     <td>Type a symptom into the box below, and select from the drop-down to add to the symptom list
     </td>
@@ -179,50 +27,37 @@ function doOnKey(event, type, text) {
     </td>
   </tr>
   <tr>
-    <td>
-      <div style="position: relative; display: inline-block;">
-        <%= text_field_tag 'symptom_text', '',
-            autocomplete: "off",
-            onkeyup: 'doOnKey(event, inType.SYMPTOM, this.value);' %>
-        <div id='symptom_data' style="position: absolute; background-color: #f1f1f1; width: 100%; border: solid; display: none;"></div>
-      </div>
-      <br>
-    </td>
-    <td>
-      <div style="position: relative; display: inline-block;">
-        <%= text_field_tag 'drug_text', '',
-            autocomplete: "off",
-            onkeyup: 'doOnKey(event, inType.DRUG, this.value);' %>
-        <div id='drug_data' style="position: absolute; background-color: #f1f1f1; width: 100%; border: solid; display: none;"></div>
-      </dir>
-      <br>
-    </td>
+    <% [ "symptom", "drug" ].each do |t| %>
+      <td>
+        <div class="inputBlock">
+          <%= text_field_tag "#{t}_text", '',
+              autocomplete: "off",
+              onkeyup: "doOnKey(event, inType.#{t.upcase}, this.value,'#{root_url}');" %>
+          <div class="dropDownBlock" id="<%= t %>_data"></div>
+        </div>
+        <br>
+      </td>
+    <% end %>
   </tr>
   <tr>
-    <td>
-      <%= select_tag "symptomList", "",
-          :size => 5, :style => "width: 150px;", multiple: true,
-          :ondblclick => 'list_remove_selected("symptomList")' %>
-      <BR>
-      <%= button_tag 'Remove',
-          type: 'button',
-          :onclick => 'list_remove_selected("symptomList")' %>
-      <%= button_tag 'Clear',
-          type: 'button',
-          :onclick => 'list_remove_all("symptomList")' %>
-    </td>
-    <td>
-      <%= select_tag "drugList", "",
-          :size => 5, :style => "width: 150px;", multiple: true,
-          :ondblclick => 'list_remove_selected("drugList")' %>
-      <BR>
-      <%= button_tag 'Remove',
-          type: 'button',
-          :onclick => 'list_remove_selected("drugList")' %>
-      <%= button_tag 'Clear',
-          type: 'button',
-          :onclick => 'list_remove_all("drugList")' %>
-    </td>
+    <% [ "symptom", "drug" ].each do |t| %>
+      <td>
+        <%= select_tag "#{t}List", "",
+            class: "list",
+            size: 5, 
+            multiple: true,
+            ondblclick: "list_remove_selected('#{t}List')" %>
+        <BR>
+        <%= button_tag 'Remove',
+            type: 'button',
+            class: "listButton",
+            onclick: "list_remove_selected('#{t}List')" %>
+        <%= button_tag 'Clear',
+            type: 'button',
+            class: "listButton",
+            onclick: "list_remove_all('#{t}List')" %>
+      </td>
+    <% end %>
   </tr>
 </table>
 
@@ -232,5 +67,6 @@ function doOnKey(event, type, text) {
 
 <% end %>
 
-<%= javascript_tag 'loadListOptions("drugList")' %>
-<%= javascript_tag 'loadListOptions("symptomList")' %>
+<% [ "symptom", "drug" ].each do |t| %>
+<%= javascript_tag "loadListOptions('#{t}List');" %>
+<% end %>
