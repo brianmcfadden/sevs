@@ -13,11 +13,13 @@ div.inputBlock {
   display: inline-block;
 }
 div.dropDownBlock {
+  overflow: auto;
   position: absolute;
   background-color: #f1f1f1;
   border: solid;
   display: none; /* start off hidden */
-/*width: 100%; */
+  height: 900%;
+  width: 110%;
 }
 select.list {
   width: 150px;
