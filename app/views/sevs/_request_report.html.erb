@@ -4,6 +4,25 @@
 
 <br>
 
+<script>
+document.addEventListener('click', function(event) {
+  var isClickInside;
+  var clearDropDowns = true;
+  <% ["drug_data", "symptom_data", "drug_text", "symptom_text"].each do |d| %>
+  e = document.getElementById("<%= d %>");
+  isClickInside = e.contains(event.target);
+  if (isClickInside) {
+    clearDropDowns = false;
+  }
+  <% end %>
+  if (clearDropDowns) {
+  <% ["drug_data", "symptom_data"].each do |d| %>
+    <%= d %>.style.display = "none";
+  <% end %>
+  }
+});
+</script>
+
 <div class="explanation">
   <p>
     This page produces reports that compare the symptoms that you are feeling with the known side effects of the drugs that you're taking.
@@ -32,7 +51,9 @@
         <div class="inputBlock">
           <%= text_field_tag "#{t}_text", '',
               autocomplete: "off",
-              onkeyup: "doOnKey(event, inType.#{t.upcase}, this.value,'#{root_url}');" %>
+              onfocus: "doOnKey(event, inType.#{t.upcase}, this.value,'#{root_url}');",
+              onkeyup: "doOnKey(event, inType.#{t.upcase}, this.value,'#{root_url}');"
+          %>
           <div class="dropDownBlock" id="<%= t %>_data"></div>
         </div>
         <br>
