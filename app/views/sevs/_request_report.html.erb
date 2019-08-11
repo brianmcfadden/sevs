@@ -92,16 +92,18 @@ symptom_xhr.onreadystatechange = function() { doReadyStateChange(inType.SYMPTOM)
 function doOptionClicked(itemid, itemname, type) {
   switch(type) {
     case inType.DRUG:
-      listElement = document.getElementById("drugList");
-      dropDownElement = document.getElementById("drug_data");
+      listName = "drugList";
+      dropDownName = "drug_data";
       break;
     case inType.SYMPTOM:
-      listElement = document.getElementById("symptomList");
-      dropDownElement = document.getElementById("symptom_data");
+      listName = "symptomList";
+      dropDownName = "symptom_data";
       break;
     default:
       return false;
   }
+  listElement = document.getElementById(listName);
+  dropDownElement = document.getElementById(dropDownName);
   option = document.createElement("option");
   option.id = itemid;
   option.value = itemid;
@@ -109,6 +111,7 @@ function doOptionClicked(itemid, itemname, type) {
   if (listElement.namedItem(option.value) == null) {
     listElement.add(option);
   }
+  list_options_change(listName);
   dropDownElement.style.display = "none";
 }
 function doReadyStateChange(type) {
