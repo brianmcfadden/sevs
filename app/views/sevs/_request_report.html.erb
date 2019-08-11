@@ -1,33 +1,6 @@
 <%= form_with(model: @sevs, local: true,
     :html => { :onsubmit => 'formsubmit();' } ) do |f| %>
 
-<br>
-
-<div style="width: 50%; margin: 0 auto; text-align: center;">
-  <p>
-    This page produces reports that compare the symptoms that you are feeling with the known side effects of the drugs that you're taking.
-  </p>
-  <p>
-    On the left, there is a box where you can add the symptoms that you're feeling to a list.
-  </p>
-  <p>
-    On the right, you'll see a box where you can enter the names of the drugs that you're taking.  Right now, we only show generic names, so you'll need to know the generic (for instance, "lorazepam") instead of the brand name (which might be "Ativan").
-  </p>
-  <p>
-    Clicking on the button that says "Generate Report" will show you the report and allow you to print or save it locally.
-  </p>
-</div>
-
-<table border=0 style="text-align: center; width:100%">
-  <tr>
-    <td>Type a symptom into the box below, and select from the drop-down to add to the symptom list
-    </td>
-    <td>Type the name of a drug into the box below, and select from the drop-down to add to the prescription list
-    </td>
-  </tr>
-
-<!-- ------------------------------------------------- -->
-
 <script>
 
   function loadListOptions(listName) {
@@ -170,6 +143,31 @@ function doOnKey(event, type, text) {
 }
 </script>
 
+<!-- ------------------------------------------------- -->
+
+<br>
+
+<div style="width: 50%; margin: 0 auto; text-align: center;">
+  <p>
+    This page produces reports that compare the symptoms that you are feeling with the known side effects of the drugs that you're taking.
+  </p>
+  <p>
+    On the left, there is a box where you can add the symptoms that you're feeling to a list.
+  </p>
+  <p>
+    On the right, you'll see a box where you can enter the names of the drugs that you're taking.  Right now, we only show generic names, so you'll need to know the generic (for instance, "lorazepam") instead of the brand name (which might be "Ativan").
+  </p>
+  <p>
+    Clicking on the button that says "Generate Report" will show you the report and allow you to print or save it locally.
+  </p>
+</div>
+<table border=0 style="text-align: center; width:100%">
+  <tr>
+    <td>Type a symptom into the box below, and select from the drop-down to add to the symptom list
+    </td>
+    <td>Type the name of a drug into the box below, and select from the drop-down to add to the prescription list
+    </td>
+  </tr>
   <tr>
     <td>
       <div style="position: relative; display: inline-block;">
