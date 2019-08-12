@@ -1,2 +1,95 @@
 <% @sevs = Sev.new %>
-<%= render partial: "request_report", sevs: @sevs %>
+
+<%= form_with(model: @sevs, local: true,
+    :class => "mainform",
+    :html => { :onsubmit => 'formsubmit();' } ) do |f| %>
+
+<br>
+
+<script>
+document.addEventListener('click', function(event) {
+  var isClickInside;
+  var clearDropDowns = true;
+  <% ["drug_data", "symptom_data", "drug_text", "symptom_text"].each do |d| %>
+  e = document.getElementById("<%= d %>");
+  isClickInside = e.contains(event.target);
+  if (isClickInside) {
+    clearDropDowns = false;
+  }
+  <% end %>
+  if (clearDropDowns) {
+  <% ["drug_data", "symptom_data"].each do |d| %>
+    <%= d %>.style.display = "none";
+  <% end %>
+  }
+});
+</script>
+
+<div class="explanation">
+  <p class="explanation">
+    This page produces reports that compare the symptoms that you are feeling with the known side effects of the drugs that you're taking.
+  </p>
+  <p class="explanation">
+    On the left, there is a box where you can add the symptoms that you're feeling to a list.
+  </p>
+  <p class="explanation">
+    On the right, you'll see a box where you can enter the names of the drugs that you're taking.  Right now, we only show generic names, so you'll need to know the generic (for instance, "lorazepam") instead of the brand name (which might be "Ativan").
+  </p>
+  <p class="explanation">
+    Clicking on the button that says "Generate Report" will show you the report and allow you to print or save it locally.
+  </p>
+</div>
+
+<table>
+  <tr>
+    <td>Type a symptom into the box below, and select from the drop-down to add to the symptom list
+    </td>
+    <td>Type the name of a drug into the box below, and select from the drop-down to add to the prescription list
+    </td>
+  </tr>
+  <tr>
+    <% [ "symptom", "drug" ].each do |t| %>
+      <td>
+        <div class="inputBlock">
+          <%= text_field_tag "#{t}_text", '',
+              autocomplete: "off",
+              onfocus: "doOnKey(event, inType.#{t.upcase}, this.value,'#{root_url}');",
+              onkeyup: "doOnKey(event, inType.#{t.upcase}, this.value,'#{root_url}');"
+          %>
+          <div class="dropDownBlock" id="<%= t %>_data"></div>
+        </div>
+        <br>
+      </td>
+    <% end %>
+  </tr>
+  <tr>
+    <% [ "symptom", "drug" ].each do |t| %>
+      <td>
+        <%= select_tag "#{t}List", "",
+            class: "list",
+            size: 5, 
+            multiple: true,
+            ondblclick: "list_remove_selected('#{t}List')" %>
+        <BR>
+        <%= button_tag 'Remove',
+            type: 'button',
+            class: "listButton",
+            onclick: "list_remove_selected('#{t}List')" %>
+        <%= button_tag 'Clear',
+            type: 'button',
+            class: "listButton",
+            onclick: "list_remove_all('#{t}List')" %>
+      </td>
+    <% end %>
+  </tr>
+</table>
+
+<div style="text-align: center">
+    <%= f.submit "Generate Report", autofocus: true %>
+</div>
+
+<% end %>
+
+<% [ "symptom", "drug" ].each do |t| %>
+<%= javascript_tag "loadListOptions('#{t}List');" %>
+<% end %>
