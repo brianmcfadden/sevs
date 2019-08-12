@@ -97,51 +97,69 @@ function printReport() {
   </P>
 </h3>
 
-<h4>
-  <P>
-    <div style="text-indent: 10%">
-      Drugs that have the listed symptoms as side effects
-    </div>
-  </P>
-</h4>
-
-<p>
-  <% @drugsWithSymptoms.each do |d| %>
-    <p>
-      <B><%= d[:drug].name %></B>
-      <%= if d[:drug].manufacturer then puts(" is manufactured by "); d[:drug].manufacturer.name; end %>
-      <%= if d[:drug].manufacturer && d[:drug].classification then puts(" and "); end %>
-      <%= if d[:drug].classification then puts(" belongs to the <I>"); d[:drug].classification.name; puts("</I> class of drugs"); end %>
-      <%= if d[:drug].manufacturer || d[:drug].classification then puts("."); end %>
-      The side effects include:
-      <% @drugsWithSymptoms.find_all { |dws| dws[:drug].id == d[:drug].id }.
-                            each do |dws| %>
-        <%= dws[:symptoms].map { |s| s.name }.join(", ") %>
-      <% end %>
-    </p>
-  <% end %>
-</p>
-</P>
-
-<h4>
-  <P>
-    <div style="text-indent: 10%">Common side effects</div>
-  </P>
-</h4>
-
-<P>
-The most common side effects given the drug list:
-  <ul style="list-style-type:none;">
-    <% @commonSideEffects.each do |cse| %>
-      <li>
-        <div style="text-indent: 2.0em">
-        [ <%= cse[:count] %> ] : <%= cse[:side].symptom.name %>
-        </div>
-      </li>
+<% if @drugsWithSymptoms == [] then %>
+  <h4>
+    <P>
+      <div style="text-indent: 10%">
+        The listed drugs have no side effects related to the suggested symptoms.
+      </div>
+    </P>
+  </h4>
+<% else %>
+  <h4>
+    <P>
+      <div style="text-indent: 10%">
+        Drugs that have the listed symptoms as side effects
+      </div>
+    </P>
+  </h4>
+  <p>
+    <% @drugsWithSymptoms.each do |d| %>
+      <p>
+        <B><%= d[:drug].name %></B>
+        <%= if d[:drug].manufacturer then puts(" is manufactured by "); d[:drug].manufacturer.name; end %>
+        <%= if d[:drug].manufacturer && d[:drug].classification then puts(" and "); end %>
+        <%= if d[:drug].classification then puts(" belongs to the <I>"); d[:drug].classification.name; puts("</I> class of drugs"); end %>
+        <%= if d[:drug].manufacturer || d[:drug].classification then puts("."); end %>
+        The side effects include:
+        <% @drugsWithSymptoms.find_all { |dws| dws[:drug].id == d[:drug].id }.
+                              each do |dws| %>
+          <%= dws[:symptoms].map { |s| s.name }.join(", ") %>
+        <% end %>
+      </p>
     <% end %>
-  </ul>
-</P>
+  </p>
+<% end %>
 
+<% if @commonSideEffects == [] then %>
+  <h4>
+    <P>
+      <div style="text-indent: 10%">
+        The listed drugs have no common side effects
+      </div>
+    </P>
+  </h4>
+<% else %>
+  <h4>
+    <P>
+      <div style="text-indent: 10%">
+        Common side effects of the listed drugs
+      </div>
+    </P>
+  </h4>
+  <P>
+  The most common side effects given the drug list:
+    <ul style="list-style-type:none;">
+      <% @commonSideEffects.each do |cse| %>
+        <li>
+          <div style="text-indent: 2.0em">
+          [ <%= cse[:count] %> ] : <%= cse[:side].symptom.name %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </P>
+<% end %>
 <%= render partial: "disclaimer" %>
 
 </div>
