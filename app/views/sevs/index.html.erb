@@ -23,6 +23,29 @@ document.addEventListener('click', function(event) {
   <% end %>
   }
 });
+
+var clear_confirm_text = "Click 'OK' to clear the list; otherwise, click 'Cancel'";
+function clear_confirm(list) {
+  listElement = document.getElementById(list);
+  o = listElement.options.length;
+  if (o > 0) {
+    if (confirm(clear_confirm_text)) {
+      list_remove_all(list);
+    }
+  }
+}
+
+var remove_select_item_text = "To remove an item from the list, click on the item to select it and then click 'Remove'";
+function remove_confirm(list) {
+  listElement = document.getElementById(list);
+  s = listElement.selectedIndex;
+  if (s != -1) {
+    list_remove_selected(list);
+  } else {
+    alert(remove_select_item_text);
+  }
+}
+
 </script>
 
 <div class="explanation">
@@ -74,11 +97,11 @@ document.addEventListener('click', function(event) {
         <%= button_tag 'Remove',
             type: 'button',
             class: "listButton",
-            onclick: "list_remove_selected('#{t}List')" %>
+            onclick: "remove_confirm('#{t}List')" %>
         <%= button_tag 'Clear',
             type: 'button',
             class: "listButton",
-            onclick: "list_remove_all('#{t}List')" %>
+            onclick: "clear_confirm('#{t}List')" %>
       </td>
     <% end %>
   </tr>

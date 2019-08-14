@@ -33,6 +33,7 @@
   function list_remove_all(listName) {
     var list = document.getElementById(listName);
     list.innerHTML = '';
+    list_options_change(listName);
   }
   function list_select_all(listName) {
     var list = document.getElementById(listName);
