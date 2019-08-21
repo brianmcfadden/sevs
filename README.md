@@ -1,24 +1,28 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
+SEvS - produces report comparing Side Effects vs Symptoms
 
 * Ruby version
 
-* System dependencies
+2.6.3 or so
 
-* Configuration
+* Database creation / initialization
 
-* Database creation
-
-* Database initialization
+The database seeds from the SIDER database online at
+[http://sideeffects.embl.de/](http://sideeffects.embl.de/).
+You can, optionally, change the source location to a spot on the local
+filesystem if you've already downloaded the database.  You can also show
+the output with the appropriate parameters when seeding.  See db/seeds.rb
+for details.
 
 * How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+TBD
 
 * Deployment instructions
 
-* ...
+bundle install
+
+rails db:setup
+
+rails s -p 5375
