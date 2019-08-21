@@ -23,6 +23,6 @@ TBD
 
 bundle install
 
-rails db:setup
+RAILS_ENV=production rails db:setup
 
-rails s -p 5375
+./run
