@@ -46,7 +46,6 @@ function printReport() {
       type: 'button',
       :onclick => 'saveReport()' %>
   </p>
-  </p>
 </div>
 
 <div id="divPrint">
@@ -58,7 +57,7 @@ function printReport() {
 <P>
   <BR>
   <!-- h4 style="text-align:right">Produced for: Bob Smith</h4 -->
-  <h4 style="text-align:right"><%= DateTime.now.strftime("%m/%d/%Y") %> 
+  <h4 style="text-align:right"><%= DateTime.now.strftime("%m/%d/%Y") %>
   <%= DateTime.now.strftime("%I:%M %p") %> EST</h4>
 </P>
 
